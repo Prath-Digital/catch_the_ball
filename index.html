@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Ball - Ultimate Arcade Experience</title>
+    <meta name="description" content="Experience the thrill of catching colorful balls in this addictive arcade game. Test your reflexes and compete for high scores!">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+
+    <div class="hero">
+        <div class="animated-background">
+            <div class="balls-background"></div>
+            <div class="light-effects"></div>
+        </div>
+
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo-wrapper">
+                    <img src="/assets/images/logo.png" alt="Game Logo" class="game-logo">
+                    <div class="logo-glow"></div>
+                </div>
+                <h1 class="title-effect">Catch the Ball</h1>
+                <p class="tagline">Experience the Ultimate Arcade Challenge</p>
+            </div>
+            
+            <div class="menu">
+                <button id="playButton" class="premium-button">
+                    <span class="button-glow"></span>
+                    <i class="fas fa-play"></i>
+                    <span class="button-text">Play Now</span>
+                    <span class="button-description">Start Your Adventure</span>
+                </button>
+                
+                <div class="button-group">
+                    <button id="howToPlayButton" class="glass-button">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="button-text">Tutorial</span>
+                        <span class="hover-effect"></span>
+                    </button>
+                    <button id="highScoreButton" class="glass-button">
+                        <i class="fas fa-crown"></i>
+                        <span class="button-text">Leaderboard</span>
+                        <span class="hover-effect"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature premium">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p>Test your reflexes in real-time gameplay</p>
+                </div>
+                <div class="feature premium">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>5 Unique Balls</h3>
+                    <p>Each with special points and challenges</p>
+                </div>
+                <div class="feature premium">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Global Rankings</h3>
+                    <p>Compete with players worldwide</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="game-footer">
+            <p class="copyright">© 2025 Catch the Ball. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="/js/home.js"></script>
+    <script>
+        // Add loading screen functionality
+        window.addEventListener('load', () => {
+            document.querySelector('.loading-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.loading-screen').style.display = 'none';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
