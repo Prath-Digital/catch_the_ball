@@ -1289,6 +1289,82 @@ h1, .overlay-content h2 {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Enhanced shine effect specifically for save button */
+.save-shine {
+    --save-shine-color: rgba(255, 255, 255, 0.7);
+    --save-glow-color: rgba(0, 230, 118, 0.4);
+}
+
+.save-shine::before {
+    width: 150%;
+    height: 500%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        var(--save-shine-color) 20%,
+        var(--save-shine-color) 40%,
+        transparent 60%
+    );
+    animation: saveShineEffect 2s infinite;
+    transform-origin: 0 0;
+    left: -200%;
+}
+
+.save-shine:hover::before {
+    left: 200%;
+    transition: all 0.8s ease;
+}
+
+.save-shine::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: radial-gradient(circle at center, var(--save-glow-color), transparent 70%);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.save-shine:hover::after {
+    opacity: 1;
+}
+
+.save-shine:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.4),
+        0 6px 15px var(--save-glow-color),
+        0 0 20px var(--save-glow-color) inset;
+}
+
+@keyframes saveShineEffect {
+    0% {
+        transform: skewX(-45deg) translateX(0);
+        opacity: 0;
+    }
+    25% {
+        opacity: 0.7;
+    }
+    75% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: skewX(-45deg) translateX(200%);
+        opacity: 0;
+    }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .save-shine::before {
+        animation: none;
+    }
+    .save-shine:hover {
+        transform: none;
+        box-shadow: 0 0 15px var(--save-glow-color);
+    }
+}
+
 .game-btn.primary {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     color: #081018;
