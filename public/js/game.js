@@ -390,43 +390,134 @@ class Game {
 
     gameOver() {
         this.gameActive = false;
-        
+
         // Show game over overlay
         const overlay = document.getElementById('gameOverlay');
         const finalScore = document.getElementById('finalScore');
-        const highScoresList = document.getElementById('highScoresList');
-        
-        if (overlay && finalScore && highScoresList) {
+        if (overlay && finalScore) {
             finalScore.textContent = this.score;
             overlay.classList.remove('hidden');
+        }
 
-            // Update high scores
-            const highScores = JSON.parse(localStorage.getItem('highScores') || '[]');
-            const wasNewHighScore = !highScores.length || this.score > Math.min(...highScores);
+        // Set up modal handlers for score submission
+        const modal = document.getElementById('nameInputModal');
+        const modalOverlay = modal?.querySelector('.modal-overlay');
+        const submitBtn = document.getElementById('submitScoreButton');
+        const playerNameInput = document.getElementById('playerNameInput');
+        const modalScoreDisplay = document.getElementById('modalScoreDisplay');
+        const saveBtn = document.getElementById('saveScoreButton');
+        const cancelSaveBtn = document.getElementById('cancelSaveButton');
+        const saveMessage = document.getElementById('saveMessage');
+
+        // Helper to reset and hide modal
+        const hideModal = () => {
+            if (modal) {
+                modal.classList.add('hidden');
+                if (saveMessage) saveMessage.textContent = '';
+                if (playerNameInput) playerNameInput.value = '';
+            }
+        };
+
+        if (submitBtn && modal && playerNameInput && saveBtn && cancelSaveBtn) {
+            // Show modal when clicking Submit Score
+            submitBtn.onclick = () => {
+                modal.classList.remove('hidden');
+                modalScoreDisplay.textContent = this.score;
+                const stored = localStorage.getItem('playerName') || '';
+                playerNameInput.value = stored;
+                playerNameInput.focus();
+            };
+
+            // Cancel/close modal
+            cancelSaveBtn.onclick = hideModal;
             
-            highScores.push(this.score);
-            highScores.sort((a, b) => b - a);
-            highScores.splice(3); // Keep only top 3 scores
-            localStorage.setItem('highScores', JSON.stringify(highScores));
+            // Close modal when clicking overlay
+            modalOverlay?.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) hideModal();
+            });
 
-            // Display high scores
-            const medals = ['🥇', '🥈', '🥉'];
-            highScoresList.innerHTML = highScores
-                .map((score, index) => {
-                    const isNewScore = score === this.score && wasNewHighScore;
-                    return `
-                        <div class="high-score-entry ${isNewScore ? 'new' : ''}">
-                            <span>${medals[index]}</span>
-                            <span>${score} points</span>
-                        </div>
-                    `;
+            // Handle Enter key in input field
+            playerNameInput.onkeypress = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveBtn.click();
+                }
+            };
+
+            // Save score
+            saveBtn.onclick = () => {
+                const name = (playerNameInput.value || '').trim();
+                if (!name) {
+                    if (saveMessage) {
+                        saveMessage.textContent = 'Please enter your name';
+                        saveMessage.style.color = '#ff4444';
+                    }
+                    playerNameInput.classList.add('error');
+                    playerNameInput.focus();
+                    return;
+                }
+                
+                // Clear error states
+                playerNameInput.classList.remove('error');
+                if (saveMessage) {
+                    saveMessage.style.color = 'inherit';
+                }
+                
+                // Disable buttons while saving
+                saveBtn.disabled = true;
+                cancelSaveBtn.disabled = true;
+                if (saveMessage) {
+                    saveMessage.textContent = 'Saving...';
+                }
+                
+                // Store name for next time
+                try { localStorage.setItem('playerName', name); } catch (e) {}
+
+                fetch('/api/high-scores', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, score: this.score })
                 })
-                .join('');
+                .then(res => {
+                    if (!res.ok) throw new Error('Failed to save score');
+                    return res.json();
+                })
+                .then(() => {
+                    if (saveMessage) {
+                        saveMessage.textContent = 'Score saved successfully!';
+                        saveMessage.style.color = '#4CAF50';
+                    }
+                    // Redirect to leaderboard after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/leaderboard';
+                    }, 1000);
+                })
+                .catch(err => {
+                    console.error(err);
+                    if (saveMessage) {
+                        saveMessage.textContent = 'Error saving score. Please try again.';
+                        saveMessage.style.color = '#ff4444';
+                    }
+                    saveBtn.disabled = false;
+                    cancelSaveBtn.disabled = false;
+                });
+            };
+        }
+
+        // Set up restart and menu buttons
+        const restartBtn = document.getElementById('restartButton');
+        const menuBtn = document.getElementById('menuButton');
+        
+        if (restartBtn) {
+            restartBtn.onclick = () => {
+                hideModal(); // Ensure modal is hidden when restarting
+                this.restart();
+            };
         }
         
-        // Add event listeners for restart and menu buttons
-        document.getElementById('restartButton')?.addEventListener('click', () => this.restart());
-        document.getElementById('menuButton')?.addEventListener('click', () => window.location.href = '/');
+        if (menuBtn) {
+            menuBtn.onclick = () => window.location.href = '/';
+        }
     }
 
     restart() {

@@ -338,6 +338,37 @@ body {
     border-radius: 4px;
 }
 
+/* Device-specific styles */
+.mobile-device .control-key.mobile-control {
+    display: flex;
+}
+
+.mobile-device .control-key:not(.mobile-control) {
+    display: none;
+}
+
+.desktop-device .control-key.mobile-control {
+    display: none;
+}
+
+.mobile-device .key {
+    font-size: 1.8rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-device .control-key span {
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.3;
+}
+
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
     .section,

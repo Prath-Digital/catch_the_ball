@@ -81,14 +81,11 @@ A modern, engaging browser-based arcade game where players test their reflexes a
    http://localhost:3000
    ```
 
-## 🎮 Live demo
+## 🚀 Live Demo
 
-This project is deployed and available online at:
+Check out the live demo of the game at [Catch the Ball Live](https://catch-the-ball.onrender.com/).
 
-https://catch-the-ball.onrender.com/
-
-Open the link in your browser to play the live version — the site is hosted on Render.
-
+This project is deployed using Render, providing a seamless experience for players to enjoy the game online.
 
 ## 🛠️ Technology Stack
 
