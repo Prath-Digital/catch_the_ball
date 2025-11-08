@@ -1042,6 +1042,74 @@ button:hover::before {
     margin: 0.5rem;
 }
 
+/* Improved shine effect for selected buttons (game-over leaderboard, save, cancel) */
+.shine-btn {
+    --shine-size: 120%;
+    --shine-color: rgba(255,255,255,0.35);
+    position: relative;
+    overflow: hidden;
+}
+.shine-btn::before {
+    /* angled highlight bar */
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 40%;
+    height: 220%;
+    background: linear-gradient(120deg, transparent 0%, var(--shine-color) 50%, transparent 100%);
+    transform: skewX(-25deg);
+    filter: blur(6px);
+    opacity: 0;
+    transition: transform 0.9s cubic-bezier(.22,.9,.34,1), opacity 0.5s ease;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+.shine-btn::after {
+    /* soft glow */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% -10%, rgba(255,255,255,0.06), transparent 30%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+.shine-btn:hover::before,
+.shine-btn:focus-visible::before {
+    left: 120%;
+    opacity: 1;
+    transform: skewX(-25deg) translateX(0);
+}
+.shine-btn:hover::after,
+.shine-btn:focus-visible::after {
+    opacity: 1;
+}
+
+/* Slight scale and elevated shadow on hover for these important controls */
+.shine-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 24px rgba(255,255,255,0.03) inset;
+}
+.shine-btn:active {
+    transform: translateY(0) scale(0.995);
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .shine-btn::before {
+        transition: none;
+        opacity: 0.25;
+        left: 0;
+        transform: none;
+        filter: none;
+    }
+    .shine-btn:hover, .shine-btn:focus-visible {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
 #homeButton:hover, #submitScoreButton:hover, #leaderboardButton:hover, #restartButton:hover, #menuButton:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);

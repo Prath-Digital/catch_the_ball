@@ -1,63 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catch the Ball - Game</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/png" href="/assets/images/logo.png">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+  </head>
+  <body>
     <div class="game-container">
-        <div class="game-header">
-            <div class="score">
-                Score <span id="currentScore">0</span>
-            </div>
-            <div class="game-controls">
-                <button id="homeButton" onclick="window.location.href='/'">Home</button>
-                <button id="leaderboardButton" onclick="window.location.href='/leaderboard'">Leaderboard</button>
-                <div class="control-hints">
-                    <span class="control-hint">Space: Pause/Resume</span>
-                    <span class="control-hint">R: Restart</span>
-                </div>
-            </div>
-            <div class="high-score">
-                High Score <span id="highScore">0</span>
-            </div>
+      <div class="game-header">
+        <div class="score">Score <span id="currentScore">0</span></div>
+        <div class="game-controls">
+          <button id="homeButton" onclick="window.location.href='/'">
+            Home
+          </button>
+          <button
+            id="leaderboardButton"
+            onclick="window.location.href='/leaderboard'"
+          >
+            Leaderboard
+          </button>
+          <div class="control-hints">
+            <span class="control-hint">Space: Pause/Resume</span>
+            <span class="control-hint">R: Restart</span>
+          </div>
         </div>
-        <div class="game-area">
-            <canvas id="gameCanvas"></canvas>
+        <div class="high-score">High Score <span id="highScore">0</span></div>
+      </div>
+      <div class="game-area">
+        <canvas id="gameCanvas"></canvas>
+      </div>
+      <div id="gameOverlay" class="hidden">
+        <div class="overlay-content">
+          <h2>Game Over</h2>
+          <p>Final Score: <span id="finalScore">0</span></p>
+          <button id="submitScoreButton" class="game-btn primary">
+            Submit Score
+          </button>
+          <button
+            id="overlayLeaderboardButton"
+            onclick="window.location.href='/leaderboard'"
+            class="game-btn"
+          >
+            Leaderboard
+          </button>
+          <button id="restartButton" class="game-btn">Play Again</button>
+          <button id="menuButton" class="game-btn">Main Menu</button>
         </div>
-        <div id="gameOverlay" class="hidden">
-            <div class="overlay-content">
-                <h2>Game Over</h2>
-                <p>Final Score: <span id="finalScore">0</span></p>
-                <button id="submitScoreButton" class="game-btn primary">Submit Score</button>
-                <button id="overlayLeaderboardButton" onclick="window.location.href='/leaderboard'" class="game-btn">Leaderboard</button>
-                <button id="restartButton" class="game-btn">Play Again</button>
-                <button id="menuButton" class="game-btn">Main Menu</button>
-            </div>
-        </div>
+      </div>
 
-        <!-- Score Submit Modal -->
-        <div id="nameInputModal" class="modal hidden">
-            <div class="modal-overlay">
-                <div class="modal-content">
-                    <h3><i class="fas fa-trophy"></i> Submit High Score</h3>
-                    <p class="score-display">Score: <span id="modalScoreDisplay">0</span></p>
-                    <div class="input-group">
-                        <input type="text" id="playerNameInput" maxlength="20" placeholder="Enter your name">
-                    </div>
-                    <div class="modal-buttons">
-                        <button id="saveScoreButton" class="game-btn primary">Save</button>
-                        <button id="cancelSaveButton" class="game-btn">Cancel</button>
-                    </div>
-                    <div id="saveMessage" class="save-message"></div>
-                </div>
+      <!-- Score Submit Modal -->
+      <div id="nameInputModal" class="modal hidden">
+        <div class="modal-overlay">
+          <div class="modal-content">
+            <h3><i class="fas fa-trophy"></i> Submit High Score</h3>
+            <p class="score-display">
+              Score: <span id="modalScoreDisplay">0</span>
+            </p>
+            <div class="input-group">
+              <input
+                type="text"
+                id="playerNameInput"
+                maxlength="20"
+                placeholder="Enter your name"
+              />
             </div>
+            <div class="modal-buttons">
+              <button id="saveScoreButton" class="game-btn primary">
+                Save
+              </button>
+              <button id="cancelSaveButton" class="game-btn">Cancel</button>
+            </div>
+            <div id="saveMessage" class="save-message"></div>
+          </div>
         </div>
+      </div>
     </div>
     <script src="/js/game.js"></script>
-</body>
+  </body>
 </html>
