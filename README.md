@@ -73,13 +73,22 @@ A modern, engaging browser-based arcade game where players test their reflexes a
 
 3. Start the server:
    ```bash
-   node server/server.js
+   npm start
    ```
 
 4. Open your browser and navigate to:
    ```
    http://localhost:3000
    ```
+
+## 🎮 Live demo
+
+This project is deployed and available online at:
+
+https://catch-the-ball.onrender.com/
+
+Open the link in your browser to play the live version — the site is hosted on Render.
+
 
 ## 🛠️ Technology Stack
 

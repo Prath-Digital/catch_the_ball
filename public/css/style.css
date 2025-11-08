@@ -90,8 +90,8 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    opacity: 0.05;
-    filter: blur(2px);
+    opacity: 0.25;
+    filter: blur(1px);
     /* background layer should not intercept pointer events */
     pointer-events: none;
     /* hint the browser that this layer's transform may change */
